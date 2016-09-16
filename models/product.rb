@@ -3,9 +3,9 @@ require 'json'
 
 class Product
 
-	attr_reader :id, :title, :location, :summary, :url, :price
+  attr_reader :id, :title, :location, :summary, :url, :price
 
-	LOCATIONS = ['canada', 'england', 'france', 'ireland', 'mexico', 'scotland', 'taiwan', 'us']
+  LOCATIONS = ['canada', 'england', 'france', 'ireland', 'mexico', 'scotland', 'taiwan', 'us']
 
   # ping the API for the product JSON
   url = 'https://fomotograph-api.udacity.com/products.json'
@@ -34,4 +34,14 @@ class Product
   	return @products
   end
 
+  # Create the class method find_by_location that accepts a location string as an
+  # argument and returns an array of Products that have the given location.
+
+  def self.find_by_location(selected_location)
+  	self.all.select { |product| product.location == selected_location }
+  end
+
+  def self.find(product_id)
+  	self.all.select { |product| product.id == product_id.to_i }.first
+  end
 end
