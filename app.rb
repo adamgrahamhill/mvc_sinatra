@@ -148,6 +148,8 @@ end
 get '/products/location/:location' do
   # PAGE DISPLAYING ALL PHOTOS FROM ONE LOCATION
   DATA = HTTParty.get('https://fomotograph-api.udacity.com/products.json')['photos'] 
+  @products = DATA.select { |product| product['location'] == params[:location] }
+
   erb "<!DOCTYPE html>
   <html>
   <head>
@@ -172,9 +174,7 @@ get '/products/location/:location' do
         <h1> <%= params[:location] != 'us' ? params[:location].capitalize : params[:location].upcase %> </h1>
         <div id='wrapper'>
 
-        <% products = DATA.select{ |product| product['location'] == params[:location] } %>
-
-        <% products.each do |product| %>
+        <% @products.each do |product| %>
           <a href='/products/<%= product['id'] %>'>
           <div class='product'>
             <div class='thumb'>
