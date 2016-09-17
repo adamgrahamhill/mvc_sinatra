@@ -16,60 +16,9 @@ end
 
 get '/products' do
   # PRODUCTS PAGE LISTING ALL THE PRODUCTS
-   DATA = HTTParty.get('https://fomotograph-api.udacity.com/products.json')['photos'] 
-   LOCATIONS = ['canada', 'england', 'france', 'ireland', 'mexico', 'scotland', 'taiwan', 'us'] 
-   @products = [] 
-   LOCATIONS.each do |location| 
-    @products.push DATA.select { |product| product['location'] == location }.sample
-  end
-
-  erb "<!DOCTYPE html>
-  <html>
-  <head>
-  <title>Fomotograph | All Products </title>
-  <link rel='stylesheet' type='text/css' href='<%= url('/style.css') %>'>
-  <link href='https://fonts.googleapis.com/css?family=Work+Sans:400,500,600' rel='stylesheet' type='text/css'>
-  </head>
-
-  <body>
-
-    <div id='container'>
-
-      <div id='header'>
-        <a href='/'><img src='/logo-black-text.png' alt='logo image' class='logo'/></a>
-        <a href='/team' class='nav'>Team</a>
-        <a href='/products' class='nav'>Products</a>
-      </div>
-
-
-      <div id='main'>
-        <h1> All Products </h1>
-        <div id='wrapper'>
-
-          <% @products.each do |product| %>
-          <a href='/products/location/<%= product['location'] %>'>
-          <div class='product'>
-            <div class='thumb'>
-              <img src='<%= product['url'] %>' />
-            </div>
-            <div class='caption'>
-              <%= product['location'] != 'us' ? product['location'].capitalize : product['location'].upcase %>
-            </div>
-          </div>
-          </a>
-          <% end %>
-
-        </div>
-      </div>
-
-      <div id='footer'>
-        © Fomotograph
-      </div>
-
-    </div>
-
-  </body>
-  </html>"
+  @page_title = "All Products"
+  @products = Product.sample_locations
+  erb :products
 end
 
 get '/products/location/:location' do
