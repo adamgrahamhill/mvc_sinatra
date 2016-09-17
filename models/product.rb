@@ -44,4 +44,9 @@ class Product
   def self.find(product_id)
   	self.all.select { |product| product.id == product_id.to_i }.first
   end
+
+  def self.priced_below(price)
+  	self.all.select { |product| product.price < price }
+  end
+  
 end

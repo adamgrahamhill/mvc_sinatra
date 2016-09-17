@@ -4,4 +4,4 @@
   <p class='summary'> <%= @product.summary %> </p>
   <p class='summary'>Order your prints today for $<%= @product.price %></p>
   <img class='full' src='<%= @product.url %>' />
-  <a class='small-button' href='/products/location/<%= @product.location %>'> View All <%= @product.location != 'us' ? @product.location.capitalize : @product.location.upcase %> Products </a>
+  <a class='small-button' href='/products/location/<%= @product.location %>'> View All <%= titlecase(@product.location) %> Products </a>
